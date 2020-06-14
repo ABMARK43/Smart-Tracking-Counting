@@ -73,21 +73,23 @@ class Recording extends PureComponent {
   renderPieChart() {
     var x = this.props.counterData;
     var y = String(x)
-    console.log(y)
-    console.log(y.length)
-    if (y.length > 150) {
-
-      var m = y.split('total": ')[1].split(',')[0]
-      var n = y.split('total": ')[2].split(',')[0]
-      var z = parseInt(m) - parseInt(n)
-      console.log(z)
-      var data = this.generateData(z)
-    }
-    else if (y.length > 50) {
-      var z = y.split('total": ')[1].split(',')[0]
-      var data = this.generateData(z)
-    }
+    if(y.search('person') != -1){
+    var n = (y.match(/person/g)).length;
+        if (n == 2) {
+          //console.log(y)
+          var m = y.split('person": ')[1].split(',')[0]
+          var n = y.split('person": ')[2].split(',')[0]
+          var z = Math.abs(parseInt(m) - parseInt(n))
+          var data = this.generateData(z)
+        }
+        else if (n == 1) {
+         // console.log(y)
+          var z = Math.abs(parseInt(y.split('person": ')[1].split(',')[0]))
+          var data = this.generateData(z)
+        }
+  }
     else {
+     // console.log(y)
       var z = 0
       var data = this.generateData(z)
     }
@@ -104,21 +106,25 @@ class Recording extends PureComponent {
 
   }
   renderCapacity() {
-    var x = this.props.counterData;
+    var x = this.props.counterData;           // get the current state of counterData
     var max = 500
     var y = String(x)
-    if (y.length > 150) {
+    if(y.search("person") != -1){
+    var n = (y.match(/person/g)).length;
+        if (n == 2) {
+          //console.log(y)
+          var m = y.split('person": ')[1].split(',')[0]
+          var n = y.split('person": ')[2].split(',')[0]
+          var z = Math.abs(parseInt(m) - parseInt(n))
 
-      var m = y.split('total": ')[1].split(',')[0]
-      var n = y.split('total": ')[2].split(',')[0]
-      var z = parseInt(m) - parseInt(n)
-
-    }
-    else if (y.length > 50) {
-      var z = y.split('total": ')[1].split(',')[0]
-
-    }
+        }
+        else if (n == 1) {
+          //console.log(y)
+          var z = Math.abs(parseInt(y.split('person": ')[1].split(',')[0]));
+          }
+  }
     else {
+      //console.log(y)
       var z = 0
     }
     return (
@@ -229,7 +235,7 @@ class Recording extends PureComponent {
                       }
                     </div>
                     <div className="flex flex-initial flex-wrap mt-5 w-64">
-                      {this.DISPLAY_CLASSES.slice(0, Math.min(this.DISPLAY_CLASSES.length, 2)).map((counterClass) =>
+                      {this.DISPLAY_CLASSES.slice(0, Math.min(this.DISPLAY_CLASSES.length, 3)).map((counterClass) =>
                         <div
                           className="flex w-16 m-1 items-center justify-center"
                           key={counterClass.class}

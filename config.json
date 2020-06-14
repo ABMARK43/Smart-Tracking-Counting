@@ -1,10 +1,10 @@
 {
   "OPENDATACAM_VERSION": "3.0.0-beta.2",
-  "PATH_TO_YOLO_DARKNET" : "/home/abhishek/darknet",
+  "PATH_TO_YOLO_DARKNET" : "/home/abhishek/opendatacam/darknet",
   "VIDEO_INPUT": "file",
-  "NEURAL_NETWORK": "yolov3",
+  "NEURAL_NETWORK": "yolov4_custom",
   "VIDEO_INPUTS_PARAMS": {
-    "file": "/home/abhishek/opendatacam/demo1.mp4",
+    "file": "/home/abhishek/demo1.mp4",
     "usbcam": "-c 0",
     "raspberrycam": "nvarguscamerasrc ! video/x-raw(memory:NVMM),width=1280, height=720, framerate=30/1, format=NV12 ! nvvidconv ! video/x-raw, format=BGRx, width=640, height=360 ! videoconvert ! video/x-raw, format=BGR ! appsink",
     "remote_cam": "http://192.168.43.1:8080/video?dummy=param.mjpg",
@@ -13,11 +13,11 @@
   "TRACKER_SETTINGS": {
     "confidence_threshold": 0.2
   },
-  "VALID_CLASSES": ["person"],
+  "VALID_CLASSES": ["mask","non-mask","person"],
   "DISPLAY_CLASSES": [
-    { "class": "bicycle", "icon": "1F6B2.svg"},
+    { "class": "mask", "icon": "mask.svg"},
+    { "class": "non-mask", "icon": "non mask.svg"},
     { "class": "person", "icon": "1F6B6.svg"},
-    { "class": "truck", "icon": "1F69B.svg"},
     { "class": "motorbike", "icon": "1F6F5.svg"},
     { "class": "car", "icon": "1F697.svg"},
     { "class": "bus", "icon": "1F68C.svg"}
@@ -44,8 +44,8 @@
   "NEURAL_NETWORK_PARAMS": {
     "yolov4_custom":{
       "data": "cfg/mask.data",
-      "cfg": "cfg/yolov4_custom.cfg",
-      "weights": "yolov4_4000.weights"     
+      "cfg": "yolov4-custom.cfg",
+      "weights": "yolov4-custom_6000.weights"     
     },
     "yolov4": {
       "data": "cfg/coco.data",
@@ -55,7 +55,7 @@
     "yolov3": {
       "data": "cfg/coco.data",
       "cfg": "cfg/yolov3.cfg",
-      "weights": "yolov3.weights"
+      "weights": "/home/abhishek/yolov3.weights"
     },
     "yolov3-tiny-prn": {
       "data": "cfg/coco.data",
